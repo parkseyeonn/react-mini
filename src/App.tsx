@@ -1,8 +1,8 @@
 import { createGlobalStyle, ThemeProvider } from "styled-components";
-import {useRecoilValue} from "recoil";
+import { useRecoilState } from "recoil";
 import Router from "./Router";
-import {isDarkAtom} from "./atoms";
-import {darkTheme, lightTheme} from "./theme";
+import { isDarkAtom } from "./atoms";
+import { darkTheme, lightTheme } from "./theme";
 import styled from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
@@ -34,6 +34,9 @@ footer, header, hgroup, main, menu, nav, section {
 *[hidden] {
     display: none;
 }
+html, body {
+  height: 100%;
+}
 body {
   line-height: 1;
 }
@@ -56,16 +59,23 @@ table {
   box-sizing: border-box;
 }
 body {
+  position: relative;
   padding: 60px 20px;
   font-weight: 300;
-  font-family: 'Kanit', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   background-color:${(props) => props.theme.bgColor};
   color:${(props) => props.theme.textColor};
   line-height: 1.2;
+  transition: .2s;
 }
 a {
   text-decoration:none;
   color:inherit;
+}
+button {
+  border: none;
+  background: none;
+  padding: 0;
 }
 `;
 
@@ -73,12 +83,19 @@ const Header = styled.div`
   position: fixed;
   top: 20px;
   left: 20px;
-  button {
-    border: none;
-    background: none;
-    padding: 0;
-    font-size: 30px;
-  }
+  right: 20px;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Home = styled.button`
+  padding: 0;
+  font-size: 24px;
+  color: ${props => props.theme.textColor};
+`;
+
+const DarkMode = styled.button`
+  font-size: 24px;
 `;
 
 const backHome = () => {
@@ -86,13 +103,15 @@ const backHome = () => {
 };
 
 function App() {
-  const isDark = useRecoilValue(isDarkAtom);
+  const [isDark, setIsDark] = useRecoilState(isDarkAtom);
+  const toggleDark = () => setIsDark(prev => !prev);
 
   return (
       <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
         <GlobalStyle />
         <Header>
-            <button onClick={backHome}>⌂</button>
+            <Home type='button' onClick={backHome}>🏠</Home>
+            <DarkMode type='button' onClick={toggleDark}>{isDark ? '🌙' : '🌞'}</DarkMode>
         </Header>
         <Router />
       </ThemeProvider>

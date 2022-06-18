@@ -71,7 +71,6 @@ interface CoinInterface {
 function Coins() {
     const navigate = useNavigate();
     const setDarkAtom = useSetRecoilState(isDarkAtom);
-    const toggleDarkAtom = () => setDarkAtom(prev => !prev);
 
     // const [coins, setCoins] = useState<CoinInterface[]>([]);
     // const [loading, setLoading] = useState<boolean>(true);
@@ -98,7 +97,6 @@ function Coins() {
             </Helmet>
             <Header>
                 <Title>COIN</Title>
-                <button onClick={toggleDarkAtom} type="button">ToggleMode</button>
             </Header>
             {
                 isLoading && <Loader>Loading...</Loader>
