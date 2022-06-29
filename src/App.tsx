@@ -1,9 +1,8 @@
 import { createGlobalStyle, ThemeProvider } from "styled-components";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import Router from "./Router";
 import { isDarkAtom } from "./atoms";
 import { darkTheme, lightTheme } from "./theme";
-import styled from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
 html, body, div, span, applet, object, iframe,
@@ -79,40 +78,12 @@ button {
 }
 `;
 
-const Header = styled.div`
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  right: 20px;
-  display: flex;
-  justify-content: space-between;
-`;
-
-const Home = styled.button`
-  padding: 0;
-  font-size: 24px;
-  color: ${props => props.theme.textColor};
-`;
-
-const DarkMode = styled.button`
-  font-size: 24px;
-`;
-
-const backHome = () => {
-    window.location.href = '/';
-};
-
 function App() {
-  const [isDark, setIsDark] = useRecoilState(isDarkAtom);
-  const toggleDark = () => setIsDark(prev => !prev);
+  const isDark = useRecoilValue(isDarkAtom);
 
   return (
       <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
         <GlobalStyle />
-        <Header>
-            <Home type='button' onClick={backHome}>🏠</Home>
-            <DarkMode type='button' onClick={toggleDark}>{isDark ? '🌙' : '🌞'}</DarkMode>
-        </Header>
         <Router />
       </ThemeProvider>
   );

@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { Container } from "../layout";
 
 const LinkList = styled.ul`
   li {
@@ -22,8 +21,8 @@ const Title = styled.h1`
 
 function Index() {
     return (
-        <Container>
-            <Title>PROJECT LIST</Title>
+        <>
+           <Title>PROJECT LIST</Title>
             <LinkList>  
                 <li>
                     <Link to={'/coins'}>Coins</Link>
@@ -35,10 +34,13 @@ function Index() {
                     <Link to={'/time'}>Time</Link>
                 </li>
                 <li>
+                    <Link to={'/components'}>components</Link>
+                </li>
+                <li>
                     <Link to={'/typescript/todo'}>todo list</Link>
                 </li>
-            </LinkList>
-        </Container>
+            </LinkList> 
+        </>
     )
 }
 
